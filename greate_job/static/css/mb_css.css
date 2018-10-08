@@ -1,0 +1,18 @@
+#cpu_info{
+	text-align: center;
+}
+#memory_info{
+text-align: center;
+}
+#disk_info{
+text-align: center;
+}
+#net_info{
+text-align: center;
+}
+#user_info{
+text-align: center;
+}
+#pid_info{
+text-align: center;
+}

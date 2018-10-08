@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/new_file_cs.css')}}">
+		<title>zabbix service</title>
+	</head>
+	<body>
+		<div class="top-con">
+			<div class="inventory" style="float: left; height: 128px; background-color: #D1EEEE">
+				<table>
+					<tr><td><a href="performance_fake"><button type="button">首页</button></a></td></tr>
+					<tr><td><a href="#"><button type="button">ZABBIX</button></a></td></tr>
+					<tr><td><a href="fabric"><button type="button">FABRIC</button></a></td></tr>
+				</table>
+			</div>
+			<div id="zabbix">
+			<form action="zabbix_get" method="POST">
+				<table class="za-tab" style="text-align: center;">
+					<tr>
+						<td style="font-size: 18px;">方法</td>
+						<td>
+							<div class="inp-va">
+								<input list="list" id="act" class="aaa" type="text" name="action"  placeholder="what's your method?" />
+								<datalist id="list">
+									<option value="host.get"></option>
+									<option value="graph.create"></option>
+								</datalist>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td style="font-size: 18px;">参数</td>
+						<td>
+							<div class="inp-va">
+							<input list="list2" id="par" class="aaa" type="text" name="params"  placeholder="input your params" />
+								<datalist id="list2">
+									<option value='{"output":"extend","actionids":"3"}'></option>
+									<option value="param2"></option>
+								</datalist>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<button class="btn" type="submit" >确定</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		</div>
+		<div class="zab-roud">
+		<div class="res-z">
+			<table>
+				{% for i in zbx_info %}
+				<tr>
+					<td style="font-size:16px">
+						{{ i  ,}}
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+	</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/new_file_cs.css')}}">
+		<title>fabric service</title>
+	</head>
+	<body>
+		<div class="top-con">
+			<div class="inventory" style="float: left; height: 128px; background-color: #D1EEEE;">
+				<table>
+					<tr><td><a href="performance_fake"><button type="button">首页</button></a></td></tr>
+					<tr><td><a href="zabbix"><button type="button">ZABBIX</button></a></td></tr>
+					<tr><td><a href="#"><button type="button">FABRIC</button></a></td></tr>
+				</table>
+			</div>
+			<div id="zabbix">
+				<form action="fabric_get" method="POST">
+					<table class="za-tab" style="text-align: center;">
+						<tr>
+							<td style="font-size: 18px;"></td>
+							<td>
+								<div class="inp-va">
+								<input  id="par" class="aaa" type="text" name="cmd"  placeholder="commander" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<button class="btn" type="submit" >确定</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="zab-roud">
+			<div class="res-z">
+				{{ result }}
+			</div>
+		</div>
+	</body>
+</html>

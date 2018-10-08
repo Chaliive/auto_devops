@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="11111">
+        <meta name="author" content="2222">
+        <!--<meta http-equiv="refresh"content="1;url='index'">-->
+        <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+       
+        <title>{% block title %}欢迎来到资源监控系统{% endblock %}</title>
+         {% block css %}
+          <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+       
+          <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+        {% endblock %}
+    </head>
+
+    <body>
+    <div style="background-color: gainsboro;background-image: url(../static/pic/background_image.jpg); width: 1310px; height: 610px">
+        <div class="container">
+            <div class="row row-offcanvas row-offcanvas-right">
+                {% block content %}
+
+                {% endblock %}
+                {% include "sidebar.html" %}
+            </div><!--/row-->
+
+        </div>
+    </div>
+
+        {% block js %}
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/offcanvas.js') }}"></script>
+       
+        {% endblock %}
+    </body>
+</html>

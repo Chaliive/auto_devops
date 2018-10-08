@@ -1,0 +1,313 @@
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>资源监控系统</title>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/new_file_cs.css')}}">
+		<script src = "{{url_for('static',filename = 'js/flaskjson.js')}}"></script>
+		<script src = "{{url_for('static',filename = 'echart/echarts.js')}}"></script>
+		<script src = "{{url_for('static',filename = 'echart/infographic.js')}}"></script>
+	</head>
+	<body>
+		<div class="sm">
+			<h1 class="top">欢迎来到资源监控系统</h1>
+			<hr >
+			<div class="content">
+				<div class="left-con">
+					<table class="left-table" border="1px" cellspacing="0" cellpadding="1px">
+					<tr>
+						<td>
+							<div id="toux">
+								<img src="{{url_for('static',filename = 'pic/ok2.jpg')}}" >
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#" onclick="opens(1)">系统性能</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="#" onclick="opens(2)">系统进程</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="zabbix" onclick="opens(3)">zabbix</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="fabric" onclick="opens(4)">fabric</a>
+						</td>
+					</tr>
+				</table>
+				</div>
+				<div class="right-con">
+					<div class="real-con">
+						<div id="dis1">
+							<button onclick="exhibit(1)">cpu</button>
+							<div id="disp1" style="display: block;">
+                                <div id="gra1">
+									这里放图
+								</div>
+							</div>
+							<button onclick="exhibit(2)">内存</button>
+							<div id="disp2" style="display: none;">
+                                <div id="gra2" style="width: 880px;height: 400px;">
+                                    内存图形
+                                </div>
+							</div>
+							<button onclick="exhibit(3)">磁盘</button>
+							<div id="disp3" style="display: none;">
+								<div id="gra3" style="width: 880px;height: 400px;">
+									磁盘图形
+								</div>
+							</div>
+							<button onclick="exhibit(4)">以太网</button>
+							<div id="disp4" style="display: none;">
+								<div id="gra4" style="width: 880px;height: 400px;">
+									以太网图形
+								</div>
+							</div>
+						</div>
+						<div id="dis2" style="display:none">
+							<table class="pro_sty">
+								<tr>
+									<th style="width: 164px;">进程名称</th>
+									<th>进程id</th>
+									<th>进程状态</th>
+									<th>进程内存占用</th>
+									<th>进程的线程数</th>
+									<th>进程开启时间</th>
+								</tr>
+								{% for i in pro_res %}
+									<tr style="color=grey">
+										<td>{{ i[0] }}</td>
+										<td>{{ i[1] }}</td>
+										<td>{{ i[2] }}</td>
+										<td>{{ i[3] }}</td>
+										<td>{{ i[4] }}</td>
+										<td>{{ i[5] }}</td>
+									</tr>
+								{% endfor %}
+							</table>
+						</div>
+						<div id="dis3" style="display:none">
+						<!--<img src="{{url_for('static', filename = 'pic/spider.png')}}" >-->
+						</div>
+						<div id="dis4" style="display:none">444</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    <script type="text/javascript">
+        var option = {
+            title:{
+                text:'cpu占用'
+            },
+            tooltip:{},
+            legend:{
+                data:['from beijing']
+            },
+            xAxis:{
+                data:["{{s[9][3]}}","{{s[8][3]}}","{{s[7][3]}}","{{s[6][3]}}","{{s[5][3]}}","{{s[4][3]}}","{{s[3][3]}}","{{s[2][3]}}","{{s[1][3]}}","{{s[0][3]}}"]
+            },
+            yAxis:{
+                name:'cpu利用率 (%)',
+                type:'value',
+                scale:true,
+                max:100,
+                min:0,
+            },
+            series:[{
+                name:'cpu',
+                type:'line',
+                data:[{{s[9][0]}},{{s[8][0]}},{{s[7][0]}},{{s[6][0]}},{{s[5][0]}},{{s[4][0]}},{{s[3][0]}},{{s[2][0]}},{{s[1][0]}},{{s[0][0]}}]
+            }]
+        };
+        var myChart = echarts.init(document.getElementById('gra1'));
+        myChart.setOption(option);
+    </script>
+    <script>
+        var myChart_mem = echarts.init(document.getElementById("gra2"));
+        option = {
+            //提示框组件。开发实际中去掉了指针，提示框可以不用设置。
+            tooltip: {
+                formatter: "{a} <br/>{b} : {c}%"
+            },
+            //工具栏。本次好像也没用到，刷新，下载，我觉得还是挺实用的，具体开需求！
+            toolbox: {
+                feature: {
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            //下面属性才是仪表盘的核心！！反正我是这么认为的！！！
+            series: [{
+                //类型
+                type: 'gauge',
+                //半径
+                radius: 200,
+                //起始角度。圆心 正右手侧为0度，正上方为90度，正左手侧为180度。
+                startAngle: 225,
+                //结束角度。
+                endAngle: -45,
+                center: ['40%', '60%'],
+                //仪表盘轴线相关配置。
+                axisLine: {
+                    show:true,
+                    // 属性lineStyle控制线条样式
+                    lineStyle: {
+                        width: 40,
+                        color:[[1, '#fff']]
+                    }
+                },
+                //分隔线样式。
+                splitLine: {
+                    show: true,
+                },
+                //刻度样式。
+                axisTick: {
+                    show: true,
+                },
+                //刻度标签。
+                axisLabel: {
+                    show:true,
+                    textStyle: {
+                        color: '#8470FF',
+                        fontSize: 18
+                    }
+                },
+                //仪表盘指针。
+                pointer: {
+                    //这个show属性好像有问题，因为在这次开发中，需要去掉指正，我设置false的时候，还是显示指针，估计是BUG吧，我用的echarts-3.2.3；希望改进。最终，我把width属性设置为0，成功搞定！
+                    show: true,
+                    //指针长度
+                    length:'70%',
+                    width:4,
+                },
+                //仪表盘标题。
+                title: {
+                    show: true,
+                    offsetCenter: [0, '-40%'], // x, y，单位px
+                    textStyle: {
+                        color: '#hhh',
+                        fontSize: 28
+                    }
+                },
+                //仪表盘详情，用于显示数据。
+                detail: {
+                    show: true,
+                    offsetCenter: [0, '-10%'],
+                    formatter: '{value}%',
+                    textStyle: {
+                        fontSize: 30
+                    }
+                },
+                data: [{
+                    value: 0,
+                    name: '内存使用'
+                }]
+            }]
+        };
+        myChart_mem.setOption(option);
+        //设置定时，加载随机数据，可以直观显示
+        timeTicket = setInterval(function() {
+            var random={{info[3]*100}};
+            var color=[[random/100, '#c23531'], [1, '#EEEED1']];
+            option.series[0].axisLine.lineStyle.color=color;
+            option.series[0].data[0].value =random ;
+            myChart_mem.setOption(option, true);
+        }, 200)
+    </script>
+	<script >
+			var myChart = echarts.init(document.getElementById("gra3"));
+			option_disk = {
+				title : {
+					text: '磁盘的使用情况',
+					subtext: 'C盘',
+					x:'center',
+				},
+				tooltip : {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					left: 'right',
+					data: ['已使用','剩余']
+				},
+				series : [
+					{
+						name: '磁盘情况(GB)',
+						type: 'pie',
+						radius : '55%',
+						center: ['50%', '60%'],
+						data:[
+							{value:{{vs[1]}}, name:'已使用'},
+							{value:{{vs[2]}}, name:'剩余'}
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 2,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}
+				]
+			};
+			myChart.setOption(option_disk);
+		</script>
+	<script>
+			var myChart = echarts.init(document.getElementById("gra4"));
+			option_lines = {
+    title: {
+        text: '网络情况'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['邮件营销','联盟广告']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['周一','周二','周三','周四','周五','周六','周日']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'邮件营销',
+            type:'line',
+            stack: '总量',
+            data:[120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+            name:'联盟广告',
+            type:'line',
+            stack: '总量',
+            data:[220, 182, 191, 234, 290, 330, 310]
+        },
+    ]
+};
+
+		myChart.setOption(option_lines);
+		</script>
+	</body>
+</html>

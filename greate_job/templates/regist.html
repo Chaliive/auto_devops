@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block css %}
+ <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/file.css')}}" />
+ <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+ <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+ {% endblock %}
+ {% block content %}
+ <br>
+<div class="register-form">
+	<div class="form_regist" style=" margin-right:0px ; margin-left: 0px;">
+		<h1 style="text-align: center;">欢迎注册</h1>
+		<form id="loginForm" action="regist" method='post'>
+		  <table >
+			  <tr>
+			  <td>昵称：</td>
+			  <td><div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+								<input type="text" class="form-control" name="username" placeholder="Username">
+							</div>
+						</div></td>
+			  </tr>
+			 
+			  <tr>
+				<td>密码：</td>
+				<td><div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+								<input type="password" class="form-control" name="pwd" placeholder="Password">
+							</div>
+						</div></td>
+				</tr>
+			  <tr>
+			  <td>邮箱：</td>			  
+			  <td>
+			  <div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+								<input type="text" class="form-control" name="email" placeholder="Email">
+							</div>
+						</div>
+			  </td>			      
+			  </tr>
+				<tr>
+				<td>手机号：</td>
+				<td><div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+								<input type="text" class="form-control" name="tel" placeholder="phone">
+							</div>
+						</div>
+				</td>					
+				</tr>
+				<tr>
+					<td>
+					<button class="btn btn-success  btn-block" type="submit">
+							<b>注册</b>
+						</button>
+                        <input type="hidden" name="next" value="{{ next }}" />
+                        <h4 style="color: red"><b>{{ registerr }}</b></h4>
+					</td>	
+				</tr>
+		   </table>
+		</form>
+		</div>             
+</div>
+	{% endblock %}
+	{% block js %}
+ <!--jQuery [ REQUIRED ]-->
+	<script src="/static/js/jquery-2.1.1.min.js"></script>
+	<!--BootstrapJS [ RECOMMENDED ]-->
+	<script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/plugins/bootstrap-validator/bootstrapValidator.js"></script>
+    <!--<script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>-->
+  <script type="text/javascript">
+$(document).ready(function() {
+    $('#loginForm').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            username: {
+                message: '用户名不符合规范',
+                validators: {
+                    notEmpty: {
+                        message: '用户名不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 30,
+                        message: '用户名太短或太长'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z0-9_]+$/,
+                        message: '用户名只能由数字字母下划线组成'
+                    }
+                }
+            },
+            pwd:{
+                message: "密码不符合规范",
+                validators:{
+                    notEmpty:{
+                        'message': "密码不能为空"
+                    },
+                    stringLength:{
+                        min:3,
+                        max:30,
+                        message:'密码太短或太长'
+                    },
+                }
+            },
+            email: {
+                validators: {
+                    notEmpty: {
+                        message: '邮箱不能为空'
+                    },
+                    emailAddress: {
+                        message: '邮箱不符合规范'
+                    }
+                }
+            }
+        }
+    });
+});
+
+</script>
+  {% endblock %}

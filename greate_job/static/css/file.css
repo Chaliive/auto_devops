@@ -1,0 +1,53 @@
+.aaaa {
+text-align: center;
+color: red;
+}
+
+.mom {
+	border: #8E388E 2px solid;
+	position: absolute;
+	top: 200px;
+	left: 500px;
+	width: 400px;
+	height: 300px;
+	background-color: #D1EEEE;
+}
+
+.form_edit{
+	float: left;
+	margin-left: 200px;
+	margin-right: 220px;
+	margin-bottom: 100px;
+}
+
+.form_register{
+float: left; 
+margin-right:220px ;
+margin-left: 180px;
+}
+
+.topic_div{
+float: left; 
+margin-right:220px;
+margin-left: 180px;
+}
+
+#loginForm {
+	padding-left: 60px;
+}
+
+.form-control {
+	width: 180px;
+	height: 28px;
+}
+
+.register-form {
+    border: #8E388E 2px solid;
+	position: absolute;
+	top: 120px;
+	left: 500px;
+	width: 450px;
+	height: 400px;
+	background-color: #D1EEEE;
+	overflow-y:scroll;
+}
